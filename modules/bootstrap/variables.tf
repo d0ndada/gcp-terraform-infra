@@ -33,7 +33,7 @@ variable "roles" {
 variable "org_id" {
   description = "The organization ID to which the project belongs."
   type        = string
-    default     = ""
+  default     = ""
 }
 
 variable "billing_account" {
@@ -44,12 +44,12 @@ variable "billing_account" {
 variable "location" {
   description = "The location for the project resources."
   type        = string
-  default     = "us-central1"   
+  default     = "us-central1"
 }
 
 variable "labels" {
   description = "A set of key/value label pairs to assign to the project."
   type        = map(string)
   default     = {}
-  
+
 }

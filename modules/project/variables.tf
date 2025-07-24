@@ -31,7 +31,7 @@ variable "billing_account" {
 variable "deletion_policy" {
   description = "The deletion policy for the project."
   type        = string
-  default     = "DELETE"  # Options: DELETE, ABANDON
+  default     = "DELETE" # Options: DELETE, ABANDON
 }
 
 variable "labels" {

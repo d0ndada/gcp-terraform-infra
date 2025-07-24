@@ -17,7 +17,7 @@ variable "description" {
 
 variable "format" {
   description = "The format of the Artifact Registry repository (e.g., 'docker', 'maven')."
-  type        = string  
+  type        = string
 }
 
 variable "labels" {

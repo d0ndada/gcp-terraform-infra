@@ -5,5 +5,5 @@ output "name" {
 
 output "email" {
   description = "The email of the service account."
-  value       = google_service_account.service_account.email 
+  value       = google_service_account.service_account.email
 }
