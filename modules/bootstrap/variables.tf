@@ -30,12 +30,6 @@ variable "roles" {
   type        = list(string)
 }
 
-variable "org_id" {
-  description = "The organization ID to which the project belongs."
-  type        = string
-  default     = ""
-}
-
 variable "billing_account" {
   description = "The billing account to associate with the project."
   type        = string

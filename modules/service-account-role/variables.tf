@@ -1,8 +1,3 @@
-variable "project_name" {
-  description = "The name of the Google Cloud project."
-  type        = string
-}
-
 variable "project_id" {
   description = "The ID of the Google Cloud project."
   type        = string
