@@ -1,6 +1,6 @@
 variable "account_id" {
   description = "The ID of the service account."
-  type        = string  
+  type        = string
 }
 
 variable "display_name" {
