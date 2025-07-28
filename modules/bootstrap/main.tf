@@ -17,7 +17,7 @@ module "terraform-service-account" {
   description  = var.description
   project_id   = module.project.id
 
-  depends_on = [ module.project ]
+  depends_on = [module.project]
 }
 
 module "terraform-service-account-role" {
@@ -27,14 +27,14 @@ module "terraform-service-account-role" {
   roles                 = var.roles
   service_account_email = module.terraform-service-account.email
 
-  depends_on = [ module.terraform-service-account ]
+  depends_on = [module.terraform-service-account]
 }
 
 resource "google_service_account_key" "sa_key" {
   service_account_id = module.terraform-service-account.name
   private_key_type   = "TYPE_GOOGLE_CREDENTIALS_FILE"
 
-  depends_on = [ module.terraform-service-account-role ]
+  depends_on = [module.terraform-service-account-role]
 }
 
 resource "local_sensitive_file" "sa_key_file" {
@@ -42,28 +42,28 @@ resource "local_sensitive_file" "sa_key_file" {
   filename        = "${path.root}/terraform-sa.json"
   file_permission = "0600"
 
-  depends_on = [ google_service_account_key.sa_key ]
+  depends_on = [google_service_account_key.sa_key]
 }
 
 resource "google_project_service" "serviceusage_api" {
   project = module.project.id
   service = "serviceusage.googleapis.com"
 
-  depends_on = [ module.project ]
+  depends_on = [module.project]
 }
 
 resource "google_project_service" "cloudresourcemanager_api" {
-  project = module.project.id
-  service = "cloudresourcemanager.googleapis.com"
+  project            = module.project.id
+  service            = "cloudresourcemanager.googleapis.com"
   disable_on_destroy = false
 
-  depends_on = [ google_project_service.serviceusage_api ]
+  depends_on = [google_project_service.serviceusage_api]
 }
 
 resource "google_project_service" "artifact_registry_api" {
-  project = module.project.id
-  service = "artifactregistry.googleapis.com"
+  project            = module.project.id
+  service            = "artifactregistry.googleapis.com"
   disable_on_destroy = false
 
-  depends_on = [ google_project_service.cloudresourcemanager_api ]
+  depends_on = [google_project_service.cloudresourcemanager_api]
 }
