@@ -26,7 +26,7 @@ variable "labels" {
   default     = {}
 }
 
-variable "repository_name" {
-  description = "The name of the Artifact Registry repository."
+variable "project_id" {
+  description = "The ID of the Google Cloud project where the Artifact Registry repository will be created."
   type        = string
 }
