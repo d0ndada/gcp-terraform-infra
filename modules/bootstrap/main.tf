@@ -67,3 +67,11 @@ resource "google_project_service" "artifact_registry_api" {
 
   depends_on = [google_project_service.cloudresourcemanager_api]
 }
+
+resource "google_project_service" "secret_manager_api" {
+  project            = module.project.id
+  service            = "secretmanager.googleapis.com"
+  disable_on_destroy = false
+
+  depends_on = [google_project_service.artifact_registry_api]
+}
