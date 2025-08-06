@@ -1,9 +1,15 @@
-output "name" {
-  description = "The name of the service account."
-  value       = google_service_account.service_account.name
+output "emails" {
+  description = "Email addresses of the created service accounts"
+  value       = {
+    for k, sa in google_service_account.service_account :
+    k => sa.email
+  }
 }
 
-output "email" {
-  description = "The email of the service account."
-  value       = google_service_account.service_account.email
+output "names" {
+  description = "Names of the created service accounts"
+  value       = {
+    for k, sa in google_service_account.service_account :
+    k => sa.name
+  }
 }

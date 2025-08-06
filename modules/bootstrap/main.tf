@@ -12,10 +12,14 @@ module "project" {
 module "terraform-service-account" {
   source = "../service-account"
 
-  account_id   = var.account_id
-  display_name = var.display_name
-  description  = var.description
-  project_id   = module.project.id
+  service_accounts = [
+    {
+      account_id   = var.account_id
+      display_name = var.display_name
+      description  = var.description
+      project_id   = module.project.id
+    },
+  ]
 
   depends_on = [module.project]
 }
@@ -24,14 +28,18 @@ module "terraform-service-account-role" {
   source = "../service-account-role"
 
   project_id            = module.project.id
-  roles                 = var.roles
-  service_account_email = module.terraform-service-account.email
+  service_accounts       = [
+    {
+      email = module.terraform-service-account.emails["${var.account_id}"]
+      roles = var.roles
+    }
+  ]
 
   depends_on = [module.terraform-service-account]
 }
 
 resource "google_service_account_key" "sa_key" {
-  service_account_id = module.terraform-service-account.name
+  service_account_id = module.terraform-service-account.names["${var.account_id}"]
   private_key_type   = "TYPE_GOOGLE_CREDENTIALS_FILE"
 
   depends_on = [module.terraform-service-account-role]
@@ -74,4 +82,12 @@ resource "google_project_service" "secret_manager_api" {
   disable_on_destroy = false
 
   depends_on = [google_project_service.artifact_registry_api]
+}
+
+resource "google_project_service" "cloud_build_api" {
+  project            = module.project.id
+  service            = "cloudbuild.googleapis.com"
+  disable_on_destroy = false
+
+  depends_on = [google_project_service.secret_manager_api]
 }

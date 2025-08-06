@@ -1,6 +1,7 @@
 resource "google_service_account" "service_account" {
-  account_id   = var.account_id
-  display_name = var.display_name
-  description  = var.description
-  project      = var.project_id
+  for_each     = { for sa in var.service_accounts : sa.account_id => sa }
+  account_id   = each.value.account_id
+  display_name = each.value.display_name
+  description  = each.value.description
+  project      = each.value.project_id
 }
