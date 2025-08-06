@@ -27,8 +27,8 @@ module "terraform-service-account" {
 module "terraform-service-account-role" {
   source = "../service-account-role"
 
-  project_id            = module.project.id
-  service_accounts       = [
+  project_id = module.project.id
+  service_accounts = [
     {
       email = module.terraform-service-account.emails["${var.account_id}"]
       roles = var.roles
