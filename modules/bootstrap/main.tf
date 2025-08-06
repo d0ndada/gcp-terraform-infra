@@ -30,7 +30,7 @@ module "terraform-service-account-role" {
   project_id = module.project.id
   service_accounts = [
     {
-      email = module.terraform-service-account.emails["${var.account_id}"]
+      email = module.terraform-service-account.emails[var.account_id]
       roles = var.roles
     }
   ]
@@ -39,7 +39,7 @@ module "terraform-service-account-role" {
 }
 
 resource "google_service_account_key" "sa_key" {
-  service_account_id = module.terraform-service-account.names["${var.account_id}"]
+  service_account_id = module.terraform-service-account.names[var.account_id]
   private_key_type   = "TYPE_GOOGLE_CREDENTIALS_FILE"
 
   depends_on = [module.terraform-service-account-role]
